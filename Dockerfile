@@ -1,15 +1,12 @@
 FROM debian:wheezy
 
-ENV JAVA_VERSION 7u71
-ENV JAVA_DEBIAN_VERSION 7u71-2.5.3-2~deb7u1
-
 RUN apt-get update && apt-get install -y \
   curl \
   git \
   unzip \
   wget \
   zip \
-  openjdk-7-jdk="$JAVA_DEBIAN_VERSION"
+  openjdk-7-jdk
 
 RUN rm -rf /var/lib/apt/lists/* 
 
