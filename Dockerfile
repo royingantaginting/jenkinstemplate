@@ -1,5 +1,6 @@
 FROM debian:wheezy
 
+# Install basic required tools
 RUN apt-get update && apt-get install -y \
   curl \
   git \
@@ -7,6 +8,15 @@ RUN apt-get update && apt-get install -y \
   wget \
   zip \
   openjdk-7-jdk
+
+# Install PHP and other modules
+RUN apt-get install -y php5-cli php5-fpm php5-dev php5-mysql php5-mcrypt php5-gd php5-curl
+
+# Install PHP QA tools
+ENV PHAR_URLSRC https://phar.phpunit.de
+
+COPY php-qa.sh /usr/local/bin/php-qa.sh
+RUN php-qa.sh
 
 RUN rm -rf /var/lib/apt/lists/* 
 
@@ -25,7 +35,6 @@ VOLUME /var/jenkins_home
 # to set on a fresh new installation. Use it to bundle additional plugins 
 # or config file with your custom jenkins Docker image.
 RUN mkdir -p /usr/share/jenkins/ref/init.groovy.d
-
 
 COPY init.groovy /usr/share/jenkins/ref/init.groovy.d/tcp-slave-angent-port.groovy
 
