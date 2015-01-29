@@ -9,14 +9,21 @@ RUN apt-get update && apt-get install -y \
   zip \
   openjdk-7-jdk
 
-# Install PHP and other modules
-RUN apt-get install -y php5-cli php5-fpm php5-dev php5-mysql php5-mcrypt php5-gd php5-curl
-
-# Install PHP QA tools
-ENV PHAR_URLSRC https://phar.phpunit.de
-
+# Install PHP5 and PHP QA Tols
 COPY php-qa.sh /usr/local/bin/php-qa.sh
-RUN php-qa.sh
+
+RUN echo "deb http://packages.dotdeb.org wheezy-php56 all" > /etc/apt/sources.list.d/dotdeb.list && curl http://www.dotdeb.org/dotdeb.gpg | apt-key add -
+
+RUN apt-get update && apt-get install -y \
+  php5-cli \
+  php5-fpm \
+  php5-dev \
+  php5-mysql \
+  php5-mcrypt \
+  php5-gd \
+  php5-curl \
+  php-pear \
+  && php-qa.sh
 
 RUN rm -rf /var/lib/apt/lists/* 
 
@@ -35,10 +42,7 @@ VOLUME /var/jenkins_home
 # to set on a fresh new installation. Use it to bundle additional plugins 
 # or config file with your custom jenkins Docker image.
 RUN mkdir -p /usr/share/jenkins/ref/init.groovy.d
-
 COPY init.groovy /usr/share/jenkins/ref/init.groovy.d/tcp-slave-angent-port.groovy
-
-ENV JENKINS_VERSION 1.580.1
 
 # could use ADD but this one does not check Last-Modified header 
 # see https://github.com/docker/docker/issues/8331
@@ -54,11 +58,8 @@ EXPOSE 8080
 EXPOSE 50000
 
 USER jenkins
-
 COPY jenkins.sh /usr/local/bin/jenkins.sh
 ENTRYPOINT ["/usr/local/bin/jenkins.sh"]
-
-# from a derived Dockerfile, can use `RUN plugin.sh active.txt` to setup /usr/share/jenkins/ref/plugins from a support bundle
 
 # When building an image, copy plugins.sh and pluginslist.sh to the container directory
 # Then run plugins.sh and pluginslist.txt as a parameter to download the latest plugin version specified in the pluginslist.txt
