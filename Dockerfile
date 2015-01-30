@@ -66,3 +66,7 @@ ENTRYPOINT ["/usr/local/bin/jenkins.sh"]
 COPY plugins.sh /usr/local/bin/plugins.sh
 COPY pluginslist.txt $JENKINS_HOME/pluginslist.txt
 RUN plugins.sh $JENKINS_HOME/pluginslist.txt
+
+# Install Job Templates
+COPY jobtemplates.sh /usr/local/bin/jobtemplates.sh
+RUN jobtemplates.sh
