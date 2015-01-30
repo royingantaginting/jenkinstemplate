@@ -7,7 +7,8 @@ RUN apt-get update && apt-get install -y \
   unzip \
   wget \
   zip \
-  openjdk-7-jdk
+  openjdk-7-jdk \
+  ant
 
 # Install PHP5 and PHP QA Tols
 COPY php-qa.sh /usr/local/bin/php-qa.sh
