@@ -12,6 +12,7 @@ conditional-buildstep
 config-file-provider
 copyartifact
 covcomplplot
+crap4j
 credentials
 cvs
 disk-usage
