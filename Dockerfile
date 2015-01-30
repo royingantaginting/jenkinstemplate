@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
   openjdk-7-jdk \
   ant
 
-# Install PHP5 and PHP QA Tols
+# Install PHP5 and PHP QA Tools
 COPY php-qa.sh /usr/local/bin/php-qa.sh
 
 RUN echo "deb http://packages.dotdeb.org wheezy-php56 all" > /etc/apt/sources.list.d/dotdeb.list && curl http://www.dotdeb.org/dotdeb.gpg | apt-key add -
