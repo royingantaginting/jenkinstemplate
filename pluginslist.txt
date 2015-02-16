@@ -3,6 +3,7 @@ analysis-core
 ant
 antisamy-markup-formatter
 any-buildstep
+build-failure-analyzer
 build-pipeline-plugin
 buildcontext-capture
 checkstyle
@@ -18,6 +19,7 @@ cvs
 disk-usage
 dry
 email-ext
+embeddable-build-status
 envinject
 external-monitor-job
 flexible-publish
